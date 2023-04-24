@@ -1,4 +1,4 @@
-# COP4500 Numerical Calculus Bonus Assignment 
+# COT4500 Numerical Calculus Bonus Assignment 
 This application was built with `Python` using the `NumPy` library. 
 ## Purpose 
 The purpose of this assignment is to help you go over the previous taught material, go over
