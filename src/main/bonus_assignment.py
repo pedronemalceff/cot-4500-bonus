@@ -105,32 +105,52 @@ f[5,5] = (f[5,4] - f[4,4]) / (f[4,0] - f[1,0])
 np.set_printoptions(precision=7, suppress=True, linewidth=100)
 print()
 print(f)
+print()
 
 #Question 5
-def euler_method(f, t0, y0, tf, N):
-    # Step 1: Calculate the step size
-    h = (tf - t0) / N
+def function(t: float, w: float):
+    return w - (t**3)
+
+
+def do_work(t, w, h):
+    basic_function_call = function(t, w)
+
+    incremented_t = t + h
+    incremented_w = w + (h * basic_function_call)
+    incremented_function_call = function(incremented_t, incremented_w)
+
+    return basic_function_call + incremented_function_call
+
+def modified_eulers():
+    original_w = .5
+    start_of_t, end_of_t = (0, 3)
+    num_of_iterations = 100
+
+    # set up h
+    h = (end_of_t - start_of_t) / num_of_iterations
+
+    for cur_iteration in range(0, num_of_iterations):
+        # do we have all values ready?
+        t = start_of_t
+        w = original_w
+        h = h
+
+        # create a function for the inner work
+        inner_math = do_work(t, w, h)
+
+        # this gets the next approximation
+        next_w = w + ( (h / 2) * inner_math )
+
+        if cur_iteration == 99:
+            print("%.5f" % next_w)
+
+        # we need to set the just solved "w" to be the original w
+        # and not only that, we need to change t as well
+        start_of_t = t + h
+        original_w = next_w
+        
+    return None
+
+
+modified_eulers()
     
-    # Step 2: Perform the iterations
-    t = t0
-    y = y0
-    for i in range(0, N+1):
-        y_next = y + h * f(t, y)
-        t_next = t + h
-        t, y = t_next, y_next
-    
-    return y
-
-# Define the function f(t, y) = 
-def f(t, y):
-    return y - t**3
-
-# Example usage
-t0 = 0
-y0 = 0.5
-tf = 3
-N = 100
-
-y = euler_method(f, t0, y0, tf, N)
-print()
-print("%.6f" % y)
